@@ -1,25 +1,36 @@
 // src/components/Header.js
 import React from 'react';
-import { Container, Navbar, Form, FormControl, Button } from 'react-bootstrap';
+import { Container, Navbar, Form, FormControl, Button, Nav } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
-        <Navbar bg="warning" expand="lg">
+        <Navbar bg="white" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">당근 마켓</Navbar.Brand>
+                <Navbar.Brand href="/" className="brand">
+                    <div className="logo"></div>
+                    클론 마켓
+                </Navbar.Brand>
+                <Nav className="me-auto">
+                    <Nav.Link onClick={() => navigate('/item')}>중고거래</Nav.Link>
+                </Nav>
                 <Form className="d-flex ms-auto">
                     <FormControl
+                        id="search-input"
                         type="search"
                         placeholder="검색..."
                         className="me-2"
                         aria-label="Search"
                     />
-                    <Button variant="outline-success">검색</Button>
+                    <Button id="search-button" variant="success">검색</Button>
                 </Form>
                 <div className="ms-3">
-                    <Button variant="primary" className="me-2">로그인</Button>
-                    <Button variant="secondary">회원가입</Button>
+                    <Button id="login-button" variant="primary" className="me-2">로그인</Button>
+                    <Button id="signup-button" variant="secondary" className="me-2">회원가입</Button>
+                    <Button id="chat-button" variant="secondary">채팅하기</Button>
                 </div>
             </Container>
         </Navbar>

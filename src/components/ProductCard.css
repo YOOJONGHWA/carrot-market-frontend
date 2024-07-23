@@ -1,9 +1,12 @@
 /* src/components/ProductCard.css */
 .product-card {
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
+    max-width: 50%; /* 카드의 최대 너비를 설정 */
+    min-width: 250px; /* 카드의 최소 너비를 설정 */
+    margin: 0 auto;   /* 카드 중앙 정렬 */
+    height: auto;     /* 카드 높이 자동 설정 */
 }
+
 .product-card img {
-    height: 200px;
-    object-fit: cover;
+    width: 100%; /* 이미지가 카드의 너비에 맞게 조정됨 */
+    height: auto; /* 이미지 비율 유지 */
 }
