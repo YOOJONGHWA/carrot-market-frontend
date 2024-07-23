@@ -1,4 +1,50 @@
-/* src/components/Header.css */
-.navbar {
-    margin-bottom: 20px;
+
+/* Header.css */
+.brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    background-image: url('/public/logo.png'); /* 배경 이미지 경로 */
+    background-size: contain; /* 이미지를 요소 크기에 맞게 조정 */
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    width: 40px; /* 이미지 너비 */
+    height: 40px; /* 이미지 높이 */
+    margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
+}
+
+#search-input {
+    width: 300px; /* 원하는 너비로 설정 */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+#search-button, #login-button, #signup-button, #chat-button{
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    color: rgb(15, 14, 14);
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #131212;
+}
+
+#search-button:hover {
+    background-color: #eff0f1;
+}
+
+#login-button:hover {
+    background-color: #ebf0f4;
+}
+
+#signup-button:hover {
+    background-color: #eaeef1;
+}
+
+#chat-button:hover {
+    background-color: #f2f6f9;
 }

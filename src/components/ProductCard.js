@@ -6,7 +6,7 @@ import './ProductCard.css';
 const ProductCard = ({ product }) => {
     return (
         <Card className="product-card">
-            <Card.Img variant="top" src={product.image} alt={product.title} />
+            <Card.Img variant="top" src={product.image} />
             <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>
