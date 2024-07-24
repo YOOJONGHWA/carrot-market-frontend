@@ -2,7 +2,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { Container, Row, Col } from 'react-bootstrap';
-import './ItemPage.css';
+import '../css/ItemPage.css';
 
 const products = [
     { id: 1, title: '상품 1', price: '10,000', image: 'https://via.placeholder.com/150' },
