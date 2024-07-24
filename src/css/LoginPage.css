@@ -1,0 +1,21 @@
+/* LoginPage.css */
+body {
+    background-color: #e9ecef;
+}
+
+h2 {
+    margin-top: 50px;
+    text-align: center;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.login-container {
+    min-height: calc(100vh - 100px); /* 페이지 높이를 조정하여 푸터와의 여백을 확보 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 폼을 수직 중앙에 배치 */
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './MainPage.css'; // CSS 파일 가져오기
+import '../css/MainPage.css'; // CSS 파일 가져오기
 
 const MainPage = () => {
     return (

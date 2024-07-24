@@ -1,7 +1,7 @@
 // src/components/ProductCard.js
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import './ProductCard.css';
+import '../css/ProductCard.css';
 
 const ProductCard = ({ product }) => {
     return (
