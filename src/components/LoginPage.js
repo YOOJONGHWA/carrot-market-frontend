@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../css/LoginPage.css';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // 리다이렉션을 위한 useNavigate 훅
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      await axios.post('http://localhost:8080/api/auth/login', {
+      const response = await axios.post('http://localhost:8080/api/auth/login', {
         email,
         password,
       }, {
         withCredentials: true, // 쿠키를 전송하도록 설정
       });
 
-      // 로그인 성공 후 처리 (예: 메인 페이지로 리다이렉션)
-      window.location.href = '/';
+      // 로그인 성공 후 리다이렉션
+      navigate('/'); // useNavigate 훅을 사용하여 리다이렉션
     } catch (err) {
       console.error('로그인 오류:', err);
       setError('로그인 실패: 이메일 또는 비밀번호를 확인하세요.');
@@ -29,7 +31,7 @@ function LoginPage() {
 
   return (
     <Container className="login-container">
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>이메일 주소</Form.Label>

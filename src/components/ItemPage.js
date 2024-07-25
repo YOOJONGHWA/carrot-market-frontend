@@ -1,27 +1,49 @@
-// src/components/MainPage.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import '../css/ItemPage.css';
 
-const products = [
-    { id: 1, title: '상품 1', price: '10,000', image: 'https://via.placeholder.com/150' },
-    { id: 2, title: '상품 2', price: '20,000', image: 'https://via.placeholder.com/150' },
-    { id: 2, title: '상품 2', price: '20,000', image: 'https://via.placeholder.com/150' },
-    { id: 2, title: '상품 2', price: '20,000', image: 'https://via.placeholder.com/150' },
-    // 더 많은 상품을 추가할 수 있습니다.
-];
-
 const ItemPage = () => {
+    const [products, setProducts] = useState([
+        
+    ]);
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/posts');
+                setProducts(response.data);
+                console.log(response.data); // 콘솔에 데이터 출력
+            } catch (error) {
+                setError('상품 데이터를 가져오는데 실패했습니다.');
+                console.error(error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
     return (
         <div className="main-page">
             <main className="main-content py-4">
                 <Container>
-                    <h2 className="mb-4"></h2>
-                    <Row>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <Button 
+                            variant="primary" 
+                            onClick={() => navigate('/create-post')}>게시물 작성
+                        </Button>
+                    </div>
+                    <Row className="justify-content-center">
                         {products.map(product => (
-                            <Col sm={12} md={6} lg={4} key={product.id} className="mb-4">
-                                <ProductCard product={product} />
+                            <Col xs={12} sm={6} md={4} lg={3} key={product.id} className="mb-4">
+                                <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+                                    <ProductCard product={product} />
+                                </Link>
                             </Col>
                         ))}
                     </Row>
@@ -32,3 +54,4 @@ const ItemPage = () => {
 };
 
 export default ItemPage;
+
