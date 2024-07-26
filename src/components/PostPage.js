@@ -49,6 +49,7 @@ function PostPage() {
         try {
             const user = await fetchUser();
             setAuthor(user); // 사용자 정보를 상태에 저장
+            console.log(user);
         } catch (error) {
             setError('사용자 정보를 가져오는 데 실패했습니다.');
         }
@@ -72,7 +73,7 @@ function PostPage() {
                 latitude,
                 longitude,
                 image,
-                authorId : author.username // 작성자 ID를 서버로 전달
+                authorId: author.id // 작성자 ID를 서버로 전달
             }, {
                 withCredentials: true
             });
@@ -164,7 +165,7 @@ function PostPage() {
                         <Form.Label>작성자 ID</Form.Label>
                         <Form.Control
                             type="text"
-                            value={author.username}
+                            value={author.id || ''}
                             readOnly
                         />
                     </Form.Group>

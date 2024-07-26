@@ -16,7 +16,6 @@ const Header = () => {
                 </Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link onClick={() => navigate('/item')}>중고거래</Nav.Link>
-                    <Nav.Link onClick={() => navigate('/my-posts')}>내가 쓴 글</Nav.Link>
                 </Nav>
                 <Form className="d-flex ms-auto">
                     <FormControl
