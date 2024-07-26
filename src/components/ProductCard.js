@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
             <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
                 <Card.Text>{product.price}</Card.Text>
-                <Card.Text>{product.author_username}</Card.Text>
+                <Card.Text>{product.author.username}</Card.Text>
             </Card.Body>
         </Card>
     );
