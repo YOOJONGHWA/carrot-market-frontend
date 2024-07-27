@@ -8,7 +8,7 @@ const fetchUser = async () => {
         const response = await axios.get('http://localhost:8080/api/auth/me', {
             withCredentials: true
         });
-        return response.data; // 사용자 정보를 반환
+        return response.data;
     } catch (error) {
         console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
         throw error;
@@ -21,9 +21,10 @@ function PostPage() {
     const [price, setPrice] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null); // 이미지 파일 상태
     const [author, setAuthor] = useState(null);
     const [error, setError] = useState('');
+    const [imagePreview, setImagePreview] = useState(''); // 이미지 미리보기 상태
 
     // 사용자 현재 위치를 가져오는 함수
     const getCurrentLocation = () => {
@@ -49,9 +50,39 @@ function PostPage() {
         try {
             const user = await fetchUser();
             setAuthor(user); // 사용자 정보를 상태에 저장
-            console.log(user);
         } catch (error) {
             setError('사용자 정보를 가져오는 데 실패했습니다.');
+        }
+    };
+
+    // 이미지 선택 핸들러
+    const handleImageChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setImagePreview(URL.createObjectURL(file)); // 이미지 미리보기 URL 생성
+
+            try {
+                const filename = encodeURIComponent(file.name);
+                const response = await axios.get(`http://localhost:8080/api/posts/presigned-url?filename=${filename}`);
+                const presignedUrl = response.data;
+
+                // S3에 파일을 업로드
+                const uploadResponse = await fetch(presignedUrl, {
+                    method: 'PUT',
+                    body: file
+                });
+
+                if (uploadResponse.ok) {
+                    // 업로드 후의 이미지 URL
+                    setImage(presignedUrl.split("?")[0]);
+                } else {
+                    console.error('이미지 업로드에 실패했습니다:', uploadResponse);
+                    setError('이미지 업로드에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('이미지 업로드 중 오류 발생:', error);
+                setError('이미지 업로드 중 오류 발생');
+            }
         }
     };
 
@@ -72,9 +103,10 @@ function PostPage() {
                 price,
                 latitude,
                 longitude,
-                image,
-                authorId: author.id // 작성자 ID를 서버로 전달
+                authorId: author.id,
+                image: image // 이미지 URL을 서버에 제출
             }, {
+                headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             });
 
@@ -150,13 +182,18 @@ function PostPage() {
                 </Form.Group>
 
                 <Form.Group controlId="formImage">
-                    <Form.Label>이미지 URL</Form.Label>
+                    <Form.Label>이미지 파일</Form.Label>
                     <Form.Control
-                        type="text"
-                        placeholder="이미지 URL을 입력하세요"
-                        value={image}
-                        onChange={(e) => setImage(e.target.value)}
+                        type="file"
+                        onChange={handleImageChange}
                     />
+                    {imagePreview && (
+                        <img
+                            src={imagePreview}
+                            alt="미리보기"
+                            style={{ width: '100%', marginTop: '10px' }}
+                        />
+                    )}
                 </Form.Group>
 
                 {/* 사용자의 ID를 표시하는 읽기 전용 입력 필드 */}
